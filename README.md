@@ -278,7 +278,7 @@ seedDatabase().catch(error => console.log(error));
 # SENG8080::SAKSHI_JATIN_TASNIM_ FINAL EXAM 
 
 # Bookstore - Requirement queries
-Power Writers (Authors) with More Than X Books in the Same Genre Published Within the Last X Years:
+1. Power Writers (Authors) with More Than 5 Books in the Same Genre Published Within the Last 10 Years
 
 SELECT 
     author.id, 
@@ -289,15 +289,15 @@ FROM
 INNER JOIN 
     Author author ON book.authorId = author.id
 WHERE 
-    book.genre = :genre
-    AND book.publicationDate > DATE_SUB(CURDATE(), INTERVAL :years YEAR)
+    book.genre = 'Fantasy'
+    AND book.publicationDate > DATE_SUB(CURDATE(), INTERVAL 10 YEAR)
 GROUP BY 
     author.id
 HAVING 
-    COUNT(book.id) > :minBooks;
+    COUNT(book.id) > 5;
 
 
-Loyal Customers Who Have Spent More Than X Dollars in the Last Year:
+2. Loyal Customers Who Have Spent More Than $200 in the Last Year
 
 SELECT 
     customer.id, 
@@ -312,10 +312,11 @@ WHERE
 GROUP BY 
     customer.id
 HAVING 
-    SUM(purchase.price) > :minSpent;
+    SUM(purchase.price) > 200;
 
 
-Well-Reviewed Books that Have a Better User Rating Than Average:
+
+3. Well-Reviewed Books that Have a Better User Rating Than Average
 
 -- First get the average rating
 SELECT 
@@ -338,8 +339,7 @@ HAVING
     AVG(review.rating) > (SELECT AVG(rating) FROM Review);
 
 
-
-The Most Popular Genre by Sales:
+4. The Most Popular Genre by Sales
 
 SELECT 
     book.genre, 
@@ -355,7 +355,8 @@ ORDER BY
 LIMIT 1;
 
 
-The 10 Most Recent Posted Reviews by Customers:
+
+5. The 10 Most Recent Posted Reviews by Customers
 
 SELECT 
     review.*, 
